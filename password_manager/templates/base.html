@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>
+    {% block title %}Passwords{% endblock %}
+    </title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css' ) }}">
+</head>
+<body>
+
+<div class="container bg-light">
+    <nav class="navbar navbar-default navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ url_for('index') }}">
+            <img src="{{ url_for('static', filename='plus.svg' ) }}" width="30" height="30" alt="">
+            Passwords
+        </a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('new_password') }}">new</a>
+            </li>
+        </ul>
+    </div>
+    <form action="/" class="form-inline my-2 my-lg-0" method="POST">
+        {{ form.hidden_tag() }}
+        <input id="search" name="search" class="form-control mr-sm-2" type="text" placeholder="Search">
+        <small><a title="{{ session.get('user')}}" href="{{ url_for('logout') }}">logout</a></small>
+    </form>
+</nav>
+<hr>
+<main>
+    {% for message in get_flashed_messages() %}
+    <div class="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+
+{% block content %}{% endblock %}
+
+</main>
+
+<footer class="page-footer font-small blue pt-4">
+    <div class="container-fluid text-center text-md-left">
+        <small><p>&copy; 2022 by Pablo Alcala</p></small><br>
+    </div>
+</footer>
+</div>
+{% block scripts %}{% endblock %}
+</body>
+</html>

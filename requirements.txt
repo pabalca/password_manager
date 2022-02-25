@@ -1,0 +1,7 @@
+Flask
+Flask-WTF
+Flask-SQLAlchemy
+click
+python-secrets
+pycrypto
+gunicorn
