@@ -14,10 +14,13 @@ class Cypher:
         self.key = hashlib.sha256(password.encode("utf-8")).digest()
 
         BLOCK_SIZE = 16
-        self.pad = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * chr(
-            BLOCK_SIZE - len(s) % BLOCK_SIZE
+        self.pad = lambda s: bytes(
+            s
+            + (BLOCK_SIZE - len(s) % BLOCK_SIZE)
+            * chr(BLOCK_SIZE - len(s) % BLOCK_SIZE),
+            "utf-8",
         )
-        self.unpad = lambda s: s[:-ord(s[len(s) - 1 :])]
+        self.unpad = lambda s: s[0 : -ord(s[-1:])]
 
     def encrypt(self, raw):
         raw = self.pad(raw)

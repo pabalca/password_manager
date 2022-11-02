@@ -1,4 +1,5 @@
 venv
 .flaskenv
 *.db
-
+__pycache__
+*.swp

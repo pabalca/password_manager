@@ -3,5 +3,5 @@ Flask-WTF
 Flask-SQLAlchemy
 click
 python-secrets
-pycrypto
+pycryptodome
 gunicorn
