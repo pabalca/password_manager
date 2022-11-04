@@ -16,6 +16,10 @@ def initdb(drop):
         db.drop_all()
     db.create_all()
     click.echo("Initialized database.")
+    u = User(pwd="admin")
+    db.session.add(u)
+    db.session.commit()
+    click.echo(f"{u.id} user created.")
 
 
 @app.cli.command()
