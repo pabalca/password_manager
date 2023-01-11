@@ -27,5 +27,15 @@ class SearchForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    challenge = PasswordField("Challenge")
+    challenge = PasswordField(
+        "Challenge", validators=[DataRequired()], render_kw={"autofocus": True}
+    )
+    code = PasswordField("Challenge", validators=[DataRequired()])
     submit = SubmitField("Submit")
+
+
+class RegisterForm(FlaskForm):
+    challenge = PasswordField(
+        "Challenge", validators=[DataRequired()], render_kw={"autofocus": True}
+    )
+    submit = SubmitField("Generate")

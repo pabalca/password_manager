@@ -5,3 +5,4 @@ click
 python-secrets
 pycryptodome
 gunicorn
+pyotp

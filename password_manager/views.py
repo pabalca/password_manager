@@ -9,9 +9,24 @@ from password_manager.forms import (
     LoginForm,
     NewPasswordForm,
     SearchForm,
+    RegisterForm,
 )
 from password_manager.generator import eff
 from password_manager.models import Password, User, db
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    secret, qr = None, None
+    form = RegisterForm()
+    if form.validate_on_submit():
+        challenge = form.challenge.data
+        u = User(challenge)
+        db.session.add(u)
+        db.session.commit()
+        qr = u.qr
+        secret = u.secret
+    return render_template("register.html", form=form, qr=qr, secret=secret)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -21,9 +36,10 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         challenge = form.challenge.data
+        code = form.code.data
         users = User.query.all()
         for user in users:
-            if user.verify_password(challenge):
+            if user.verify_password(challenge) and user.verify_totp(code):
                 session["logged_in"] = True
                 session["user"] = user.id
                 return redirect(url_for("index"))
